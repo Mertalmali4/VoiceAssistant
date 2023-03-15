@@ -121,7 +121,7 @@ class Voice_Assistant():
                 print(self.phrase)
                 self.phrase= self.phrase.split(" ")
                 if("administration"in self.phrase):
-                    self.face_recognition()
+                    self.requests()
                 if("yes" in self.phrase):
                     i=0
                     j=0
@@ -349,6 +349,7 @@ class Voice_Assistant():
 
     def sadLogin(self):
         self.speak("I think you are bad today,What can I do for you sir?")
+        self.requests()
         
 
 
@@ -395,24 +396,38 @@ class Voice_Assistant():
                 self.phrase = self.phrase.lower()
                 print(self.phrase)
                 self.phrase= self.phrase.split(" ")
-                if("flip" in self.phrase or ("flip"and "money" in self.phrase)):
+                if("flip" in self.phrase or "flip" in self.phrase and "money" in self.phrase):
                     self.flip()
                 if("joke"in self.phrase):
                     self.joke()
-                if("you" and "fast" in self.phrase):
+                if("you" in self.phrase and "fast" in self.phrase):
                     self.speak("Sorry for that I decrease the speak rate now")
                     self.rate-=10
                     self.mainStandBy()
-                if("you"and"slow" in self.phrase):
+                if("you"in self.phrase and"slow" in self.phrase):
                     self.speak("Sorry for that I increase the speak rate now")
                     self.rate+=10
                     self.mainStandBy()
-                if("thank"and "you"in self.phrase):
+                if("thank" in self.phrase and "you"in self.phrase):
                     self.speak("Your welcome")
                     self.mainStandBy()
-                if("I"and"out"and"go"in self.phrase or "exit"in self.phrase):
+                if("I" in self.phrase and "out" in self.phrase and "go"in self.phrase or "exit"in self.phrase):
                     self.speak("See you later ,Sir")
                     self.standBy()
+                if("stop" in self.phrase or "play" in self.phrase):
+                    self.stopandPlayYoutube()
+                if("youtube" in self.phrase):
+                    self.speak("What do you want me to open on youtube")
+                    self.youtube()
+                if("next" in self.phrase):
+                    self.nextYoutube()
+                if("close" in self.phrase and "youtube" in self.phrase):
+                    self.browser.close()
+                    self.mainStandBy()
+                else:
+                    self.speak("I don't know this words")
+                    self.mainStandBy()
+
             except sr.UnknownValueError:
                 self.speak("When you want to talk to me you can say Jarvis")
                 self.mainStandBy()
@@ -441,19 +456,40 @@ class Voice_Assistant():
 
 
     def youtube(self):
-        
-        self.phrase="nalın dilber"
-        
-        url="https://www.youtube.com/results?search_query={}".format(self.phrase)
-        options=webdriver.ChromeOptions()
-        options.add_experimental_option("detach",True)
-        browser=webdriver.Chrome(options=options)
-        
-        browser.get(url)
-        button=browser.find_element(By.XPATH,'//*[@id="video-title"]/yt-formatted-string').click()
-        
+        self.response = sr.Recognizer()
+
+        with sr.Microphone() as source:
+                
+                
+                
+            playsound("listeningsound.wav")
+            audio = self.response.listen(source,timeout=10,phrase_time_limit=8)
+            try:
+                self.phrase = self.response.recognize_google(audio, language="tr-TR")
+                self.phrase = self.phrase.lower()
+                
+                url="https://www.youtube.com/results?search_query={}".format(self.phrase)
+                self.options=webdriver.ChromeOptions()
+                self.options.add_experimental_option("detach",True)
+                self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
+                self.browser=webdriver.Chrome(options=self.options)
+                
+                self.browser.get(url)
+                button=self.browser.find_element(By.XPATH,'//*[@id="video-title"]/yt-formatted-string').click()
+                self.mainStandBy()
+            except sr.UnknownValueError:
+                self.mainStandBy()
 
 
+        
+    
+    def stopandPlayYoutube(self):
+        button=self.browser.find_element(By.XPATH,'//*[@id="movie_player"]/div[1]/video').click()
+        self.mainStandBy()
+        
+    def nextYoutube(self):
+        button=self.browser.find_element(By.XPATH,'//*[@class="ytp-next-button ytp-button"]').click()
+        self.mainStandBy()
 
 assistant = Voice_Assistant()
 

@@ -1,0 +1,4 @@
+C:\ProgramData\Anaconda3\lib\site-packages\comtypes\__init__.py,
+152. satıra try except ekledim
+
+

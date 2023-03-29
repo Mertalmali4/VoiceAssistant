@@ -33,7 +33,7 @@ class Voice_Assistant():
         super().__init__()
         self.i = 0
         self.rate=180
-        self.standBy()
+        self.mouse()
         
         
 
@@ -719,7 +719,7 @@ class Voice_Assistant():
                     seconds=int(duration)
                     cv2.putText(image,"  Please Combine Thumb and Ring Finger",org=(30,100),fontFace=font,fontScale=0.7,color=(48,255,0),thickness=2,lineType=cv2.LINE_AA)
                     cv2.putText(image,str(seconds),org=(300,130),fontFace=font,fontScale=0.7,color=(48,255,0),thickness=2,lineType=cv2.LINE_AA)
-                    if(int(duration)==5):calibrationText=2
+                    if(int(duration)==5):calibrationText=3
 
 
 

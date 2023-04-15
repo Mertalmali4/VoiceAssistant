@@ -66,7 +66,7 @@ $ code .
   <ul>Commands:
   <li>Firstly you must to say 'Jarvis' for awake the assistant</li>
   <li>Flip or Flip the money: It says Yazı or Tura </li>
-  <li>Joke: Making a joke in english</li>
+  <li>Joke: Making a joke in English</li>
   <li>You are Speaking to fast: It decrases speaking rate</li>
   <li>You are Speaking to slow: It increases speaking rate</li>
   <li>Thank You: It goes into standby mode that does not require authentication</li>

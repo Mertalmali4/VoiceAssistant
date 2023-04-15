@@ -57,7 +57,7 @@ $ code .
   
  # Use of The App
   
-  <ul>Commands you can use:
+  <ul>Authentication:
   <li>Firstly if you have completed all of the above, you will not be able to take any action until you pass the authentication phase.</li>
   <li>It will first ask you your name and wait for you to successfully pass facial recognition.</li>
   <li>I am writing the commands below that you can use after successfully passing face recognition.</li>
